@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-development": {
+      "source": "gemini960114/skills",
+      "sourceType": "github",
+      "skillPath": "gemini/antigravity/skills/frontend-development/SKILL.md",
+      "computedHash": "110cf1bda19b32fbad31eefbb62b620458ef4b67d5ac91741579bcaa2a95a719"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+# Dependências e build
+node_modules/
+dist/
+
+# Cobertura e resultados de testes
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Arquivos locais da IDE
+.idea/
+*.iml
+
+# Variáveis de ambiente locais (preservar exemplos)
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs e arquivos temporários
+*.log
+*.tsbuildinfo
+.cache/
+*.swp
+*.swo
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db

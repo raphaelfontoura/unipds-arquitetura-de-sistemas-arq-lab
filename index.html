@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f3ec" />
+    <meta
+      name="description"
+      content="Guia visual e interativo para estudar Arquitetura de Sistemas."
+    />
+    <title>Arquitetura de Sistemas — Guia de estudo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navegação do curso">
+        <a
+          class="brand home-link"
+          href="#inicio"
+          aria-label="Voltar à página inicial"
+        >
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span
+            >ARQ<span class="brand-light">.LAB</span
+            ><small>GUIA DE ESTUDO</small></span
+          >
+        </a>
+        <div class="side-caption">SEU PERCURSO</div>
+        <div class="progress-card">
+          <div class="progress-top">
+            <span>Progresso geral</span><strong id="progress-value">0%</strong>
+          </div>
+          <div class="progress-track"><span id="progress-bar"></span></div>
+          <small id="progress-detail">0 de 13 aulas concluídas</small>
+        </div>
+        <nav id="lesson-nav" class="lesson-nav"></nav>
+        <button class="side-quiz" id="open-quiz">
+          <span class="quiz-icon">✳</span
+          ><span
+            ><strong>Desafio rápido</strong
+            ><small>Teste o que você sabe</small></span
+          ><span class="side-arrow">↗</span>
+        </button>
+        <div class="sidebar-foot">
+          <span class="status-dot"></span> Material de consulta · 13 aulas
+        </div>
+      </aside>
+
+      <main class="main-content" id="inicio">
+        <header class="topbar">
+          <div class="breadcrumbs">
+            <a class="home-breadcrumb" href="#inicio">ARQ.LAB</a
+            ><span class="crumb-slash">/</span
+            ><span id="breadcrumb-current">VISÃO GERAL</span>
+          </div>
+          <div class="topbar-actions">
+            <label class="search-box"
+              ><span>⌕</span
+              ><input
+                id="search-input"
+                type="search"
+                placeholder="Buscar conceitos..."
+                aria-label="Buscar aulas e conceitos"
+              /><kbd>/</kbd></label
+            ><button
+              class="icon-button"
+              id="theme-toggle"
+              aria-label="Alternar tema"
+            >
+              ◐
+            </button>
+          </div>
+        </header>
+
+        <section class="overview-page" id="overview-page">
+          <div class="hero">
+            <div class="hero-copy">
+              <div class="eyebrow">
+                <span class="eyebrow-line"></span> ENGENHARIA DE SOFTWARE ·
+                MÓDULO 04
+              </div>
+              <h1>Entenda como<br />sistemas <em>se organizam.</em></h1>
+              <p>
+                Um guia visual e prático para explorar arquiteturas, acompanhar
+                fluxos reais e descobrir o que revisar a seguir.
+              </p>
+              <div class="hero-actions">
+                <button class="button button-dark" id="start-study">
+                  Começar a estudar <span>→</span></button
+                ><button class="text-button" id="browse-styles">
+                  Explorar arquiteturas <span>↓</span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="hero-illustration"
+              aria-label="Diagrama ilustrativo de uma arquitetura em camadas"
+            >
+              <div class="diagram-label">
+                <span class="pulse-dot"></span> SISTEMA EM MOVIMENTO
+                <span>FIG. 01</span>
+              </div>
+              <div class="mini-system">
+                <div class="mini-client">
+                  <span class="mini-icon">◎</span
+                  ><span>Cliente<small>Pedido #4821</small></span>
+                </div>
+                <div class="mini-wire"><i></i></div>
+                <div class="mini-layers">
+                  <div><span>01</span> Apresentação <b>↔</b></div>
+                  <div><span>02</span> Negócio <b>↔</b></div>
+                  <div><span>03</span> Persistência <b>↔</b></div>
+                </div>
+                <div class="mini-wire"><i></i></div>
+                <div class="mini-db">
+                  <span>▤</span><small>BASE DE DADOS</small>
+                </div>
+                <div class="value-tag"><span>✓</span> Compra confirmada</div>
+              </div>
+              <div class="diagram-foot">
+                <span>ARQUITETURA EM CAMADAS</span
+                ><span>ENTRADA → PROCESSAMENTO → VALOR</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-heading" id="styles-section">
+            <div>
+              <div class="eyebrow">MAPA DE ARQUITETURAS</div>
+              <h2>Escolha um fluxo. Veja o sistema acontecer.</h2>
+            </div>
+            <span class="section-note">07 ESTILOS · SEM RANKING</span>
+          </div>
+          <div class="style-explorer">
+            <div
+              class="style-tabs"
+              id="style-tabs"
+              role="tablist"
+              aria-label="Estilos arquiteturais"
+            ></div>
+            <div class="style-detail">
+              <div class="style-info">
+                <div class="style-kicker" id="style-kicker">ESTILO 01</div>
+                <h3 id="style-title">Arquitetura em camadas</h3>
+                <p id="style-description"></p>
+                <div class="style-tradeoff">
+                  <span>↗</span>
+                  <div>
+                    <b>FORÇA / PONTO DE ATENÇÃO</b>
+                    <p id="style-tradeoff-text"></p>
+                  </div>
+                </div>
+                <div class="anim-controls">
+                  <button class="button button-outline" id="replay-flow">
+                    ↻ <span>Reiniciar fluxo</span></button
+                  ><span class="animation-hint"
+                    >Explore o fluxo completo ou avance etapa por etapa</span
+                  >
+                </div>
+              </div>
+              <div class="style-visual-column">
+                <div class="flow-stage">
+                  <div class="flow-label">
+                    <span>FLUXO DE UMA COMPRA</span>
+                    <div class="flow-mode-tools">
+                      <div
+                        id="flow-mode-switch"
+                        class="flow-mode-switch hidden"
+                        role="group"
+                        aria-label="Topologia Event-Driven"
+                      >
+                        <button type="button" data-flow-mode="0" class="active">
+                          Broker · Coreografia</button
+                        ><button type="button" data-flow-mode="1">
+                          Mediator · Orquestração
+                        </button>
+                      </div>
+                      <span class="live-indicator" id="flow-status"
+                        >● EM EXECUÇÃO</span
+                      >
+                    </div>
+                  </div>
+                  <p class="flow-topology-note" id="flow-topology-note"></p>
+                  <div
+                    class="flow-scroll-region"
+                    tabindex="0"
+                    role="region"
+                    aria-label="Diagrama de fluxo; role horizontalmente em telas pequenas"
+                  >
+                    <div id="flow-diagram" class="flow-diagram"></div>
+                  </div>
+                  <p class="flow-scroll-hint">
+                    Deslize o diagrama na horizontal para explorar as conexões.
+                  </p>
+                  <div
+                    class="flow-communication-legend hidden"
+                    id="flow-communication-legend"
+                  >
+                    <span><i class="sync-key"></i>chamada / dados</span
+                    ><span><i class="async-key"></i>evento / mensagem</span
+                    ><span><i class="return-key"></i>resposta</span
+                    ><span><i class="control-key"></i>controle</span>
+                  </div>
+                  <div
+                    class="simulation-controls"
+                    role="group"
+                    aria-label="Controles da simulação"
+                  >
+                    <button type="button" id="toggle-flow">Pausar</button>
+                    <button
+                      type="button"
+                      id="previous-flow"
+                      aria-label="Etapa anterior"
+                    >
+                      ←
+                    </button>
+                    <button
+                      type="button"
+                      id="next-flow"
+                      aria-label="Próxima etapa"
+                    >
+                      →
+                    </button>
+                    <label for="flow-speed">Velocidade</label>
+                    <select id="flow-speed">
+                      <option value="0.5">0,5×</option>
+                      <option value="1" selected>1×</option>
+                      <option value="2">2×</option>
+                    </select>
+                    <span id="flow-step-count"></span>
+                  </div>
+                  <div
+                    id="flow-step-list"
+                    class="flow-step-list"
+                    role="group"
+                    aria-label="Selecionar etapa"
+                  ></div>
+                  <div class="flow-caption" id="flow-caption"></div>
+                </div>
+                <section
+                  class="architecture-board"
+                  aria-labelledby="architecture-board-title"
+                >
+                  <div class="board-heading">
+                    <div>
+                      <div class="board-kicker">
+                        VISTA ESTRUTURAL · INSPIRADA EM C4
+                      </div>
+                      <h4 id="architecture-board-title">
+                        Como as partes se organizam
+                      </h4>
+                    </div>
+                    <span class="board-index" id="board-index">01 / 07</span>
+                  </div>
+                  <p class="board-description" id="board-description"></p>
+                  <div
+                    class="architecture-canvas"
+                    id="architecture-diagram"
+                  ></div>
+                  <div class="board-legend">
+                    <span><i class="legend-system"></i>limite do sistema</span
+                    ><span><i class="legend-component"></i>componente</span
+                    ><span
+                      ><i class="legend-link">→</i>dependência /
+                      comunicação</span
+                    >
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-heading lesson-heading">
+            <div>
+              <div class="eyebrow">PERCURSO DE APRENDIZAGEM</div>
+              <h2>13 aulas, no seu ritmo.</h2>
+            </div>
+            <button class="text-button" id="all-lessons">
+              Ver todas as aulas <span>→</span>
+            </button>
+          </div>
+          <div class="lesson-cards" id="lesson-cards"></div>
+          <footer class="page-footer">
+            <span
+              >ARQ.LAB
+              <span class="brand-light">· MATERIAL DE APOIO</span></span
+            ><span
+              >Baseado no material da disciplina Arquitetura de Sistemas · Elder
+              Moraes</span
+            >
+          </footer>
+        </section>
+
+        <section class="lesson-page hidden" id="lesson-page">
+          <div class="lesson-hero">
+            <button class="back-link" id="back-home">← Visão geral</button>
+            <div class="eyebrow" id="lesson-eyebrow"></div>
+            <div class="lesson-title-row">
+              <div>
+                <h1 id="lesson-title"></h1>
+                <p id="lesson-summary"></p>
+              </div>
+              <button class="complete-button" id="complete-lesson">
+                ✓ <span>Marcar como concluída</span>
+              </button>
+            </div>
+          </div>
+          <div class="lesson-layout">
+            <article class="lesson-body" id="lesson-body"></article>
+            <aside class="lesson-aside">
+              <div class="aside-card">
+                <div class="aside-label">NESTA AULA</div>
+                <div id="lesson-concepts" class="concept-tags"></div>
+              </div>
+              <div class="aside-card practical-card">
+                <div class="aside-label">NA PRÁTICA <span>✳</span></div>
+                <div id="lesson-practice"></div>
+              </div>
+              <div class="aside-card checkpoint-card">
+                <div class="aside-label">
+                  CHECKPOINT <span>03 PERGUNTAS</span>
+                </div>
+                <p>Responda ao quiz para validar o que aprendeu.</p>
+                <button class="button button-dark full-width" id="lesson-quiz">
+                  Fazer checkpoint <span>→</span>
+                </button>
+              </div>
+            </aside>
+          </div>
+          <div class="lesson-bottom">
+            <button id="previous-lesson">← Aula anterior</button
+            ><button class="button button-outline" id="next-lesson">
+              Próxima aula →
+            </button>
+          </div>
+        </section>
+
+        <section class="search-results hidden" id="search-results">
+          <div class="eyebrow">RESULTADOS DA BUSCA</div>
+          <h1>Encontre no material.</h1>
+          <p id="search-summary"></p>
+          <div id="search-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="quiz-dialog" class="quiz-dialog">
+      <form method="dialog">
+        <button class="dialog-close" aria-label="Fechar quiz">×</button>
+      </form>
+      <div class="quiz-content" id="quiz-content"></div>
+    </dialog>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
