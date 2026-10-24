@@ -19,7 +19,18 @@ export function createQuiz({ openLesson }) {
           }));
     const shuffled = shuffle(pool);
     quizState = {
-      questions: shuffled.slice(0, lessonIndex === null ? 5 : 3),
+      questions: shuffled
+        .slice(0, lessonIndex === null ? 5 : 3)
+        .map((question) => {
+          const optionIndices = shuffle(
+            question.options.map((_, index) => index),
+          );
+          return {
+            ...question,
+            options: optionIndices.map((index) => question.options[index]),
+            correctAnswer: optionIndices.indexOf(question.correctAnswer),
+          };
+        }),
       index: 0,
       score: 0,
       wrong: new Set(),

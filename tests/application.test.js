@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { JSDOM } from "jsdom";
 import { lessons } from "../src/data/lessons.js";
 
-test("study, progress, search, architecture flows and quizzes work together", async () => {
+test("study, progress, search, architecture flows and quizzes work together", async (t) => {
   const dom = new JSDOM(
     await readFile(new URL("../index.html", import.meta.url), "utf8"),
     { url: "http://localhost" },
@@ -80,6 +80,8 @@ test("study, progress, search, architecture flows and quizzes work together", as
     assert.ok(document.body.classList.contains("dark-mode"));
 
     click("#start-study");
+    const originalQuestions = structuredClone(lessons);
+    t.mock.method(Math, "random", () => 0);
     click("#lesson-quiz");
     assert.ok(dialog.open);
     for (let index = 0; index < 3; index++) {
@@ -87,7 +89,14 @@ test("study, progress, search, architecture flows and quizzes work together", as
       const question = lessons[0].questions.find(
         (item) => item.prompt === prompt,
       );
-      click(`[data-answer="${question.correctAnswer}"]`);
+      const correctButton = $$(".quiz-option").find(
+        (button) =>
+          button.textContent.slice(3).trim() ===
+          question.options[question.correctAnswer],
+      );
+      assert.notEqual(+correctButton.dataset.answer, question.correctAnswer);
+      correctButton.click();
+      assert.ok(correctButton.classList.contains("correct"));
       assert.ok($("#quiz-feedback").classList.contains("good"));
       assert.ok($$(".quiz-option").every((button) => button.disabled));
       click("#quiz-next");
@@ -102,9 +111,19 @@ test("study, progress, search, architecture flows and quizzes work together", as
     const question = lessons
       .flatMap((lesson) => lesson.questions)
       .find((item) => item.prompt === prompt);
-    click(
-      `[data-answer="${(question.correctAnswer + 1) % question.options.length}"]`,
+    const wrongButton = $$(".quiz-option").find(
+      (button) =>
+        button.textContent.slice(3).trim() !==
+        question.options[question.correctAnswer],
     );
+    wrongButton.click();
+    assert.ok(wrongButton.classList.contains("incorrect"));
+    assert.equal(
+      $(".quiz-option.correct").textContent.slice(3).trim(),
+      question.options[question.correctAnswer],
+    );
+    assert.equal($("#quiz-feedback").classList.contains("good"), false);
+    assert.deepEqual(lessons, originalQuestions);
     click(".review-link");
     assert.equal(dialog.open, false);
     assert.equal($("#lesson-page").classList.contains("hidden"), false);
