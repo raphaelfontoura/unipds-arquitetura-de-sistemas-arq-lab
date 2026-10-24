@@ -384,6 +384,12 @@ p {
 .button-dark:hover {
   background: #2c4856;
 }
+.dark-mode .button-dark {
+  color: var(--paper);
+}
+.dark-mode .button-dark:hover {
+  background: #d6e4dd;
+}
 .button-outline {
   border: 1px solid #d9ddd5;
   background: transparent;
