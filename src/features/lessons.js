@@ -69,11 +69,7 @@ export function createLessonBrowser({
       .join("");
     $("#lesson-practice").innerHTML =
       `<ul>${lesson.practice.map((x) => `<li>${x}</li>`).join("")}</ul>`;
-    const complete = $("#complete-lesson");
-    complete.classList.toggle("done", completed.has(currentLesson));
-    complete.innerHTML = completed.has(currentLesson)
-      ? "✓ <span>Aula concluída</span>"
-      : "✓ <span>Marcar como concluída</span>";
+    renderCompletionButton();
     $("#previous-lesson").textContent = currentLesson
       ? "← Aula anterior"
       : "← Visão geral";
@@ -90,18 +86,34 @@ export function createLessonBrowser({
     renderNav();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
-  function toggleCompleted() {
-    if (completed.has(currentLesson)) completed.delete(currentLesson);
-    else completed.add(currentLesson);
+  function renderCompletionButton() {
+    const complete = $("#complete-lesson");
+    complete.classList.toggle("done", completed.has(currentLesson));
+    complete.innerHTML = completed.has(currentLesson)
+      ? "✓ <span>Aula concluída</span>"
+      : "✓ <span>Marcar como concluída</span>";
+  }
+  function refreshCompletion() {
     saveProgress(storage, completed);
     renderCards();
     updateProgress();
-    openLesson(currentLesson);
+    renderNav();
+    renderCompletionButton();
+  }
+  function completeLesson(lessonIndex) {
+    completed.add(lessonIndex);
+    refreshCompletion();
+  }
+  function toggleCompleted() {
+    if (completed.has(currentLesson)) completed.delete(currentLesson);
+    else completed.add(currentLesson);
+    refreshCompletion();
   }
   return {
     openLesson,
     renderNav,
     toggleCompleted,
+    completeLesson,
     getCurrentLesson: () => currentLesson,
     init() {
       renderNav();

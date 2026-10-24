@@ -10,7 +10,10 @@ const lessonBrowser = createLessonBrowser({
   onLeaveOverview: explorer.stop,
 });
 const { openLesson } = lessonBrowser;
-const quiz = createQuiz({ openLesson });
+const quiz = createQuiz({
+  openLesson,
+  completeLesson: lessonBrowser.completeLesson,
+});
 const { search } = createSearch({
   openLesson,
   showOverview,

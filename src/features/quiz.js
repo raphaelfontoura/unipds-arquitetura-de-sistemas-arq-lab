@@ -2,7 +2,7 @@ import { lessons } from "../data/lessons.js";
 import { $, $$ } from "../shared/dom.js";
 import { shuffle } from "../shared/shuffle.js";
 
-export function createQuiz({ openLesson }) {
+export function createQuiz({ openLesson, completeLesson }) {
   let quizState = null;
   function startQuiz(lessonIndex = null) {
     const pool =
@@ -19,6 +19,7 @@ export function createQuiz({ openLesson }) {
           }));
     const shuffled = shuffle(pool);
     quizState = {
+      lessonIndex,
       questions: shuffled
         .slice(0, lessonIndex === null ? 5 : 3)
         .map((question) => {
@@ -95,7 +96,12 @@ export function createQuiz({ openLesson }) {
     );
     $("#quiz-finish").onclick = () => {
       if (wrong.length) startQuiz();
-      else $("#quiz-dialog").close();
+      else {
+        if (score === total && total > 0 && quizState.lessonIndex !== null) {
+          completeLesson(quizState.lessonIndex);
+        }
+        $("#quiz-dialog").close();
+      }
     };
   }
   return { startQuiz };

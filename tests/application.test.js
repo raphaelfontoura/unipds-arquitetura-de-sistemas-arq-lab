@@ -102,8 +102,63 @@ test("study, progress, search, architecture flows and quizzes work together", as
       click("#quiz-next");
     }
     assert.match($(".quiz-result-score").textContent, /3.*3/);
+    assert.equal($("#progress-value").textContent, "0%");
+    assert.match($("#complete-lesson").textContent, /Marcar como concluída/);
     click("#quiz-finish");
     assert.equal(dialog.open, false);
+    assert.match($("#complete-lesson").textContent, /Aula concluída/);
+    assert.ok($("#complete-lesson").classList.contains("done"));
+    assert.equal($("#progress-value").textContent, "8%");
+    assert.equal($("#progress-detail").textContent, "1 de 13 aulas concluídas");
+    assert.ok($('.nav-item[data-lesson="0"] .nav-check'));
+    assert.match(
+      $('.lesson-card[data-lesson="0"] .lesson-card-status').textContent,
+      /Concluída/,
+    );
+    assert.deepEqual(
+      JSON.parse(window.localStorage.getItem("arqlab-completed")),
+      [0],
+    );
+
+    const answerRemaining = (count, missFirst = false) => {
+      for (let index = 0; index < count; index++) {
+        const question = lessons
+          .flatMap((lesson) => lesson.questions)
+          .find((item) => item.prompt === $("#quiz-content h2").textContent);
+        $$(".quiz-option")
+          .find((button) => {
+            const correct =
+              button.textContent.slice(3).trim() ===
+              question.options[question.correctAnswer];
+            return missFirst && index === 0 ? !correct : correct;
+          })
+          .click();
+        click("#quiz-next");
+      }
+    };
+    // Repeating a successful checkpoint must keep the lesson completed.
+    click("#lesson-quiz");
+    answerRemaining(3);
+    click("#quiz-finish");
+    assert.match($("#complete-lesson").textContent, /Aula concluída/);
+    assert.equal($("#progress-value").textContent, "8%");
+
+    click("#next-lesson");
+    click("#lesson-quiz");
+    answerRemaining(3, true);
+    assert.match($("#complete-lesson").textContent, /Marcar como concluída/);
+    assert.equal($("#progress-value").textContent, "8%");
+    dialog.close();
+
+    // A mixed challenge does not complete the currently open lesson.
+    click("#open-quiz");
+    answerRemaining(5);
+    click("#quiz-finish");
+    assert.match($("#complete-lesson").textContent, /Marcar como concluída/);
+    assert.deepEqual(
+      JSON.parse(window.localStorage.getItem("arqlab-completed")),
+      [0],
+    );
 
     click("#open-quiz");
     assert.match($(".quiz-meta").textContent, /1 \/ 5/);
